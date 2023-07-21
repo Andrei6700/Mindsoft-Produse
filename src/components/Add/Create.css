@@ -1,0 +1,40 @@
+.card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #fff;
+  width: 50%;
+  height: 50%;
+}
+
+.label {
+  font-weight: bold;
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 30%;
+  width: 80px;
+}
+
+.container-inputs {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin-bottom: 10px; 
+}
+
+.input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.label {
+  margin-right: 10px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
