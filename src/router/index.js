@@ -22,11 +22,7 @@ const router = createRouter({
       name: 'produseEdit', 
       component: produseEdit
     },
-    {
-      path: '/produse/:id/edit',
-      name: 'produseEdit', 
-      component: produseEdit
-    }
+
   ]
 })
 

@@ -2,8 +2,10 @@
   <div class="container">
     <div class="card">
       <div class="card-header">
-        <h3> 
-          <RouterLink to="/produse/Add" class="btn btn-primary float-end">Adauga</RouterLink>
+        <h3>
+          <Button  >
+            <RouterLink to="/produse/Add" style="text-decoration:none">Adauga</RouterLink>
+          </Button>
         </h3>
       </div>
       <div class="card-board">
@@ -62,6 +64,8 @@
 </template>
 
 <script>
+import Dropdown from 'primevue/dropdown';
+import Button from 'primevue/button';
 import './View.css'
 import axios from 'axios'
 export default {
@@ -69,7 +73,12 @@ export default {
 
   data() {
     return {
-      produse: []
+      produse: [],
+      // selectedAction: null,
+      // actiunii: [ 
+      //   { name: 'Edit' },
+      //   { name: 'Delete' }
+      // ],
     }
   },
 
@@ -81,7 +90,6 @@ export default {
     getProduse() {
       axios
         .get('http://localhost/get_produse.php')
-
         .then((res) => {
           this.produse = res.data
           console.log(this.produse)
@@ -91,9 +99,9 @@ export default {
         })
     },
     deleteProdus(produsId) {
-      if (confirm('Are you sure?')) {
+      if (confirm(`Are you sure to delete ${produsId}`)) {
         axios
-          .delete(`https://localhost:8000/api/produse/${produsId}/delete`)
+          .delete(`https://localhost:8000/api/produse/${produsDenumire}/delete`)
           .then((res) => {
             alert(`Deleted ${produsId}`)
           })
@@ -105,3 +113,9 @@ export default {
   }
 }
 </script>
+
+
+
+
+
+
