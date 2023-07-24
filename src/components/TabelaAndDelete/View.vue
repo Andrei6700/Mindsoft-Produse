@@ -3,82 +3,46 @@
     <div class="card">
       <div class="card-header">
         <h3>
-          <Button  >
-            <RouterLink to="/produse/Add" style="text-decoration:none">Adauga</RouterLink>
+          <Button>
+            <RouterLink to="/produse/Add" style="text-decoration: none">Adauga</RouterLink>
           </Button>
         </h3>
       </div>
       <div class="card-board">
-        <tr
-          style="
-            width: 100%;
-            display: flex;
-            height: auto;
-            justify-content: center;
-            flex-direction: row;
-            align-items: center;
-            padding-bottom: 10px;
-          "
-        >
-          Produse
-        </tr>
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Denumire</th>
-              <th>Stoc</th>
-              <th>Pret</th>
-              <th>Actiuni</th>
-            </tr>
-          </thead>
-          <tbody v-if="this.produse.length > 0">
-            <tr v-for="(produs, id) in this.produse" :key="id">
-              <td>{{ produs.ID }}</td>
-              <td>{{ produs.Denumire }}</td>
-              <td>{{ produs.Stoc }}</td>
-              <td>{{ produs.Pret }}</td>
-              <td>
-                <RouterLink
-                  :to="{ path: '/produse/' + produs.id + '/edit' }"
-                  class="btn btn-success"
-                >
-                  Edit
-                </RouterLink>
-                <button type="button" @click="deleteProdus(produs.ID)" class="btn btn-danger">
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </tbody>
-
-          <tbody v-else>
-            <tr>
-              <td colspan="5">Loading</td>
-            </tr>
-          </tbody>
-        </table>
+        <DataTable :value="produse" :key="id" showGridlines tableStyle="min-width: 30rem">
+          <Column field="ID" header="Id">{{ produs.ID }}</Column>
+          <Column field="Denumire" header="Denumire">{{ produs.Denumire }}</Column>
+          <Column field="Stoc" header="Stoc">{{ produs.Stoc }}</Column>
+          <Column field="Pret" header="Pret">{{ produs.Pret }}</Column>
+          <Column field="Actiuni" header="Actiuni">
+            <template #body="rowData">
+              <SplitButton label="Save" :model="produse" :items="label" />
+            </template>
+          </Column>
+        </DataTable>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Dropdown from 'primevue/dropdown';
-import Button from 'primevue/button';
 import './View.css'
 import axios from 'axios'
-export default {
-  name: 'produse',
 
+export default {
+  label: 'produse',
   data() {
     return {
-      produse: [],
-      // selectedAction: null,
-      // actiunii: [ 
-      //   { name: 'Edit' },
-      //   { name: 'Delete' }
-      // ],
+      produse: [
+        {
+          label: 'Update',
+          command: () => {}
+        },
+        {
+          label: 'Delete',
+          command: () => {}
+        }
+      ]
     }
   },
 
@@ -98,12 +62,14 @@ export default {
           console.error(error)
         })
     },
+
     deleteProdus(produsId) {
       if (confirm(`Are you sure to delete ${produsId}`)) {
         axios
-          .delete(`https://localhost:8000/api/produse/${produsDenumire}/delete`)
+          .delete(`https://localhost:8000/api/produse/${produsId}/delete`)
           .then((res) => {
             alert(`Deleted ${produsId}`)
+            this.getProduse()
           })
           .catch((error) => {
             console.error(error)
@@ -113,9 +79,3 @@ export default {
   }
 }
 </script>
-
-
-
-
-
-

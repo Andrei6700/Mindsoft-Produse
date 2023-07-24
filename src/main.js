@@ -14,7 +14,7 @@ import DialogService from 'primevue/dialogservice'
 import Dropdown from 'primevue/dropdown';
 import InputText from 'primevue/inputtext';
 import MultiSelect from 'primevue/multiselect';
-
+import SplitButton from 'primevue/splitbutton';
 
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -39,5 +39,8 @@ app.component('DataTable', DataTable);
 app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup);
 app.component('Row', Row);
+app.component('SplitButton', SplitButton);
+
+
 
 app.mount('#app')
