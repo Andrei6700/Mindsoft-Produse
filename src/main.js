@@ -16,6 +16,11 @@ import InputText from 'primevue/inputtext';
 import MultiSelect from 'primevue/multiselect';
 
 
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ColumnGroup from 'primevue/columngroup';   // optional
+import Row from 'primevue/row';                   // optional
+
 const app = createApp(App)
 
 app.use(createPinia())
@@ -23,12 +28,16 @@ app.use(router)
 app.use(PrimeVue);
 app.use(PrimeVue, { ripple: true });
 app.use(DialogService);
-app.use(router);
 
 app.component('Button', Button);
 app.component('Card', Card);
 app.component('Dropdown', Dropdown);
 app.component('InputText', InputText);
 app.component('MultiSelect', MultiSelect);
+
+app.component('DataTable', DataTable);
+app.component('Column', Column);
+app.component('ColumnGroup', ColumnGroup);
+app.component('Row', Row);
 
 app.mount('#app')

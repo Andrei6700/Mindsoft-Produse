@@ -54,7 +54,7 @@
 
           <tbody v-else>
             <tr>
-              <td colspan="4">Loading</td>
+              <td colspan="5">Loading</td>
             </tr>
           </tbody>
         </table>

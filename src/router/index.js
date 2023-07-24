@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ProduseView from '../components/TabelaAndDelete/View.vue' 
 import ProduseAdd from '../components/Add/Create.vue'
 import produseEdit from '../components/Update/Edit.vue'
+import produseTest from '../components/Add/table.vue'
 
 
 const router = createRouter({
@@ -22,7 +23,6 @@ const router = createRouter({
       name: 'produseEdit', 
       component: produseEdit
     },
-
   ]
 })
 
