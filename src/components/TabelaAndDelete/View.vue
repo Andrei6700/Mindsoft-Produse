@@ -56,41 +56,45 @@ export default {
 
   methods: {
     getProduse() {
-      axios
-        .get('http://localhost/get_produse.php')
-        .then((res) => {
-          this.produse = res.data.map((rowData) => ({
-            ...rowData,
-            selectedAction: null
-          }))
-        })
-        .catch((error) => {
-          console.error(error)
-        })
-    },
+  axios
+    .get('http://localhost/get_produse.php')
+    .then((res) => {
+      this.produse = res.data.map((produs) => ({
+        ID: produs.ID,
+        Denumire: produs.Denumire,
+        Stoc: produs.Stoc,
+        Pret: produs.Pret,
+        selectedAction: null
+      }))
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+},
 
-    linkpage(produs) {
+linkpage(produs) {
   const selectedValue = this.selectedAction.name; 
   if (selectedValue === 'Edit') {
     this.$router.push(`/produse/${produs.ID}/edit`);
   } else if (selectedValue === 'Delete') {
-    this.deleteProdus(produs.ID);
+    const confirmMessage = `Sunteți sigur că doriți să ștergeți produsul "${produs.Denumire}" cu identificatorul #${produs.ID}?`;
+    if (confirm(confirmMessage)) {
+      this.deleteProdus(produs.ID);
+    }
   }
 },
 
-    deleteProdus(produsId) {
-      if (confirm(`Are you sure to delete ${produsId}`)) {
-        axios
-          .delete(`https://localhost:8000/api/produse/${produsId}/delete`)
-          .then((res) => {
-            alert(`Deleted ${produsId}`)
-            this.getProduse()
-          })
-          .catch((error) => {
-            console.error(error)
-          })
-      }
-    }
-  }
-}
+    deleteProdus(produs) {
+      axios
+        .delete(`https://localhost:8000/api/produse/${produs.ID}/delete`)
+        .then((res) => {
+          alert(`Produsul cu ID-ul ${produs.ID} a fost șters.`);
+          this.getProduse();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+  },
+};
 </script>
