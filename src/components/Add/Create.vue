@@ -8,34 +8,35 @@
       <div class="container-inputs">
         <div class="input-container">
           <label for="produs-id" class="label">ID</label>
-          <input type="text" id="produs-id" v-model="data.produs.ID" class="form-control" />
+          <InputText  type="text" id="produs-id" v-model="data.produs.ID" class="form-control" />
         </div>
       </div>
 
       <div class="container-inputs">
         <div class="input-container">
           <label for="produs-denumire" class="label">Denumire</label>
-          <input type="text" id="produs-denumire" v-model="data.produs.Denumire" class="form-control" />
+          <InputText  type="text" id="produs-denumire" v-model="data.produs.Denumire" class="form-control" />
         </div>
       </div>
 
       <div class="container-inputs">
         <div class="input-container">
           <label for="produs-stoc" class="label">Stoc</label>
-          <input type="text" id="produs-stoc" v-model="data.produs.Stoc" class="form-control" />
+          <InputText  type="text" id="produs-stoc" v-model="data.produs.Stoc" class="form-control" />
         </div>
       </div>
 
       <div class="container-inputs">
         <div class="input-container">
           <label for="produs-pret" class="label">Pret</label>
-          <input type="text" id="produs-pret" v-model="data.produs.Pret" class="form-control" />
+          <InputText  type="text" id="produs-pret" v-model="data.produs.Pret" class="form-control" />
         </div>
       </div>
 
       <div class="container-inputs">
         <div class="input-container">
-          <button type="button" class="btn btn-primary" @click="saveProdus">Save</button>
+          <!-- <button type="button" class="btn btn-primary" @click="saveProdus">Save</button> -->
+          <Button  label="Submit"  @click="saveProdus" />
         </div>
       </div>
 
