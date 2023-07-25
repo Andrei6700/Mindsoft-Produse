@@ -1,4 +1,4 @@
-<template >
+<template>
   <div class="container">
     <div class="card">
       <div class="card-header">
@@ -15,25 +15,18 @@
           <Column field="Stoc" header="Stoc">{{ produs.Stoc }}</Column>
           <Column field="Pret" header="Pret">{{ produs.Pret }}</Column>
           <Column field="Actiuni" header="Actiuni">
-            <template #body="produse">
+
+            <template #body="produs">
               <Dropdown
                 :options="actiunii"
                 optionLabel="name"
-                placeholder="Select a Action"
+                placeholder="Select an Action"
                 v-model="selectedAction"
                 class="min-width: 10rem"
+                @change="linkpage(produs)"
               />
-              <div v-if="selectedAction === 'Edit'">
-                <RouterLink :to="`/produse/${produs.ID}/edit`" >
-                  Edit
-                </RouterLink>
-              </div>
-              <div v-else-if="selectedAction === 'Delete'">
-                <button type="button" @click="deleteProdus(produs.ID)" >
-                  Delete
-                </button>
-              </div>
             </template>
+
           </Column>
         </DataTable>
       </div>
@@ -43,25 +36,22 @@
 
 
 <script>
-import { RouterLink } from 'vue-router';
-import './View.css';
-import axios from 'axios';
+import { RouterLink } from 'vue-router'
+import './View.css'
+import axios from 'axios'
 
 export default {
   name: 'produse',
   data() {
     return {
       selectedAction: null,
-      actiunii: [
-        { name: 'Edit' }, 
-        { name: 'Delete' }
-      ],
+      actiunii: [{ name: 'Edit' }, { name: 'Delete' }],
       produse: []
-    };
+    }
   },
 
   mounted() {
-    this.getProduse();
+    this.getProduse()
   },
 
   methods: {
@@ -71,12 +61,21 @@ export default {
         .then((res) => {
           this.produse = res.data.map((rowData) => ({
             ...rowData,
-            selectedAction: null,
-          }));
+            selectedAction: null
+          }))
         })
         .catch((error) => {
-          console.error(error);
-        });
+          console.error(error)
+        })
+    },
+
+    linkpage(produs) {
+      const selectedValue = produs.selectedAction;
+      if (selectedValue === 'Edit') {
+        this.$router.push(`/produse/${produs.ID}/edit`);
+      } else if (selectedValue === 'Delete') {
+        this.deleteProdus(produs.ID);
+      }
     },
 
     deleteProdus(produsId) {
@@ -84,14 +83,14 @@ export default {
         axios
           .delete(`https://localhost:8000/api/produse/${produsId}/delete`)
           .then((res) => {
-            alert(`Deleted ${produsId}`);
-            this.getProduse();
+            alert(`Deleted ${produsId}`)
+            this.getProduse()
           })
           .catch((error) => {
-            console.error(error);
-          });
+            console.error(error)
+          })
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
