@@ -41,14 +41,14 @@ import './View.css'
 import axios from 'axios'
 
 export default {
-  name: 'produse',
   data() {
-    return {
-      selectedAction: null,
-      actiunii: [{ name: 'Edit' }, { name: 'Delete' }],
-      produse: []
-    }
-  },
+  return {
+    selectedAction: null,
+    actiunii: [{ name: 'Edit' },
+     { name: 'Delete' }],
+    produse: []
+  };
+},
 
   mounted() {
     this.getProduse()
@@ -70,13 +70,13 @@ export default {
     },
 
     linkpage(produs) {
-      const selectedValue = produs.selectedAction;
-      if (selectedValue === 'Edit') {
-        this.$router.push(`/produse/${produs.ID}/edit`);
-      } else if (selectedValue === 'Delete') {
-        this.deleteProdus(produs.ID);
-      }
-    },
+  const selectedValue = this.selectedAction.name; 
+  if (selectedValue === 'Edit') {
+    this.$router.push(`/produse/${produs.ID}/edit`);
+  } else if (selectedValue === 'Delete') {
+    this.deleteProdus(produs.ID);
+  }
+},
 
     deleteProdus(produsId) {
       if (confirm(`Are you sure to delete ${produsId}`)) {
