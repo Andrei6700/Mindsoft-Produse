@@ -1,11 +1,11 @@
-<template>
+<template >
   <div class="container">
     <div class="card">
       <div class="card-header">
         <h3>
-          <Button>
-            <RouterLink to="/produse/Add" style="text-decoration: none">Adauga</RouterLink>
-          </Button>
+          <RouterLink to="/produse/Add" style="text-decoration: none">
+            <Button>Adauga</Button>
+          </RouterLink>
         </h3>
       </div>
       <div class="card-board">
@@ -15,8 +15,24 @@
           <Column field="Stoc" header="Stoc">{{ produs.Stoc }}</Column>
           <Column field="Pret" header="Pret">{{ produs.Pret }}</Column>
           <Column field="Actiuni" header="Actiuni">
-            <template #body="rowData">
-              <SplitButton label="Save" :model="produse" :items="label" />
+            <template #body="produse">
+              <Dropdown
+                :options="actiunii"
+                optionLabel="name"
+                placeholder="Select a Action"
+                v-model="selectedAction"
+                class="min-width: 10rem"
+              />
+              <div v-if="selectedAction === 'Edit'">
+                <RouterLink :to="`/produse/${produs.ID}/edit`" >
+                  Edit
+                </RouterLink>
+              </div>
+              <div v-else-if="selectedAction === 'Delete'">
+                <button type="button" @click="deleteProdus(produs.ID)" >
+                  Delete
+                </button>
+              </div>
             </template>
           </Column>
         </DataTable>
@@ -25,29 +41,27 @@
   </div>
 </template>
 
+
 <script>
-import './View.css'
-import axios from 'axios'
+import { RouterLink } from 'vue-router';
+import './View.css';
+import axios from 'axios';
 
 export default {
-  label: 'produse',
+  name: 'produse',
   data() {
     return {
-      produse: [
-        {
-          label: 'Update',
-          command: () => {}
-        },
-        {
-          label: 'Delete',
-          command: () => {}
-        }
-      ]
-    }
+      selectedAction: null,
+      actiunii: [
+        { name: 'Edit' }, 
+        { name: 'Delete' }
+      ],
+      produse: []
+    };
   },
 
   mounted() {
-    this.getProduse()
+    this.getProduse();
   },
 
   methods: {
@@ -55,12 +69,14 @@ export default {
       axios
         .get('http://localhost/get_produse.php')
         .then((res) => {
-          this.produse = res.data
-          console.log(this.produse)
+          this.produse = res.data.map((rowData) => ({
+            ...rowData,
+            selectedAction: null,
+          }));
         })
         .catch((error) => {
-          console.error(error)
-        })
+          console.error(error);
+        });
     },
 
     deleteProdus(produsId) {
@@ -68,14 +84,14 @@ export default {
         axios
           .delete(`https://localhost:8000/api/produse/${produsId}/delete`)
           .then((res) => {
-            alert(`Deleted ${produsId}`)
-            this.getProduse()
+            alert(`Deleted ${produsId}`);
+            this.getProduse();
           })
           .catch((error) => {
-            console.error(error)
-          })
+            console.error(error);
+          });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
