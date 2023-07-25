@@ -7,11 +7,11 @@
       <div class="card-body">
         <div class="mb-3">
           <label for="produs-id">ID</label>
-          <InputText  type="text" id="produs-id" v-model="data.produs.ID" class="form-control" />
+          <InputText type="text" id="produs-id" v-model="data.produs.ID" class="form-control" />
         </div>
         <div class="mb-3">
           <label for="produs-denumire">Denumire</label>
-          <InputText 
+          <InputText
             type="text"
             id="produs-denumire"
             v-model="data.produs.Denumire"
@@ -20,17 +20,16 @@
         </div>
         <div class="mb-3">
           <label for="produs-stoc">Stoc</label>
-          <InputText  type="text" id="produs-stoc" v-model="data.produs.Stoc" class="form-control" />
+          <InputText type="text" id="produs-stoc" v-model="data.produs.Stoc" class="form-control" />
         </div>
         <div class="mb-3">
           <label for="produs-pret">Pret</label>
-          <InputText  type="text" id="produs-pret" v-model="data.produs.Pret" class="form-control" />
+          <InputText type="text" id="produs-pret" v-model="data.produs.Pret" class="form-control" />
         </div>
         <div class="mb-3">
           <!-- <button type="button" class="btn btn-primary" @click="updateProdus">Save</button> -->
           <Toast />
-          <Button label="Save"  @click="updateProdus" />
-
+          <Button label="Save" @click="updateProdus" />
         </div>
       </div>
     </div>
@@ -40,13 +39,13 @@
 <script>
 import './Edit.css'
 import axios from 'axios'
-import { useToast } from "primevue/usetoast"; 
+import { useToast } from 'primevue/usetoast'
 
 export default {
   name: 'produsEdit',
   data() {
     return {
-      produsId: '', 
+      produsId: '',
       data: {
         produs: {
           ID: '',
@@ -58,15 +57,15 @@ export default {
     }
   },
   mounted() {
-    this.produsId = this.$route.params.id; 
-    this.getProdusData(this.$route.params.id);
+    this.produsId = this.$route.params.id
+    this.getProdusData(this.$route.params.id)
   },
   methods: {
     getProdusData(produsId) {
       axios.get(`https://localhost:8000/api/produse/${produsId}/edit`).then((res) => {
-        console.log(res.data.produs);
-        this.data.produs = res.data.produs; 
-      });
+        console.log(res.data.produs)
+        this.data.produs = res.data.produs
+      })
     },
 
     updateProdus() {
@@ -78,16 +77,16 @@ export default {
             Denumire: '',
             Stoc: '',
             Pret: ''
-          };
+          }
         })
         .catch((error) => {
-          console.error(error);
-        });
+          console.error(error)
+        })
     },
 
     save() {
-      toast.add({ severity: 'success', summary: 'Success', detail: ' Produs salvat', life: 3000 });
-    },
+      toast.add({ severity: 'success', summary: 'Success', detail: ' Produs salvat', life: 3000 })
+    }
   }
 }
 </script>
